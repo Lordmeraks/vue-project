@@ -52,16 +52,13 @@
           <div class="row row-cols-1 row-cols-md-3 g-4">
             <div v-for="movie in movies" class="col" :key="movie._id">
               <div class="card">
-                <img v-if="movie.poster" class="card-img-top" :src="movie.poster" />
+                <img v-if="movie.poster_path" class="card-img-top" :src="movie.poster_path" />
                 <div class="card-body">
                   <h5 class="card-title fw-bold">{{ movie.title }}</h5>
-                  <p v-if="movie.rated" class="card-text">
-                    Rating: {{ movie.rated }}
+                  <p class="card-text">
+                    Rating: {{ movie.vote_average }}
                   </p>
-                  <p class="card-text">{{ movie.plot }}</p>
-                  <router-link :to="'/movie/' + movie._id" class="btn btn-primary">
-                    View Reviews
-                  </router-link>
+                  <p class="card-text">{{ movie.overview }}</p>
                 </div>
               </div>
             </div>
@@ -101,7 +98,7 @@
 </template>
 
 <script>
-import MovieService from '../services/MovieService';
+import MovieService from './services/MovieService';
 export default {
   name: 'Movies',
   data() {
@@ -133,7 +130,8 @@ export default {
       this.totalPages = Math.ceil(
         moviesData.total_results / this.entriesPerPage
       ) - 1;
-      this.movies = moviesData.movies;
+      console.log(moviesData);
+      this.movies = moviesData.data;
     },
   },
 };
